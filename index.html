@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>withersky — портфолио</title>
+  <meta name="description" content="Портфолио разработчика: проекты, разложенные по ячейкам, в стиле расширения Tabula.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="withersky — наверх">
+      <img class="brand-avatar" src="https://avatars.githubusercontent.com/u/55928929?v=4" alt="Аватар withersky" width="28" height="28">
+      <span>withersky</span>
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#projects">Проекты</a>
+      <a href="#about">Обо мне</a>
+      <a class="nav-external" href="https://github.com/withersky" target="_blank" rel="noopener">GitHub&nbsp;↗</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow" id="eyebrow">Привет, я&nbsp;— Никита&nbsp;·&nbsp;GitHub&nbsp;withersky</p>
+          <h1>Мои <br>проекты!</h1>
+          <p class="hero-subtitle">
+            Инструменты для Linux, браузерные расширения и&nbsp;системные утилиты —
+            всё в&nbsp;открытом доступе и&nbsp;в&nbsp;стиле электронной таблицы.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/withersky" target="_blank" rel="noopener">GitHub профиль</a>
+            <a class="btn btn-ghost" href="#projects">Смотреть проекты</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-value" id="statRepos">—</span>
+              <span class="stat-label">репозиториев</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="statLanguages">—</span>
+              <span class="stat-label">языков</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="statStars">—</span>
+              <span class="stat-label">звёзд</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="github-card" href="https://github.com/withersky" target="_blank" rel="noopener">
+          <img
+            id="ghChart"
+            src="https://ghchart.rshah.org/7289da/withersky"
+            alt="График вклада в GitHub за последний год"
+            width="663" height="104" loading="lazy">
+          <span class="github-card-caption">Вклад в GitHub за последний год</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <div class="section-head">
+        <h2>Проекты</h2>
+        <p class="section-sub">Фильтр-«листы», как во вкладке Tabula</p>
+      </div>
+
+      <div class="sheet-bar" role="tablist" aria-label="Фильтр проектов по языку">
+        <div class="sheet-tabs" id="sheetTabs"></div>
+      </div>
+
+      <div class="project-grid" id="projectGrid"></div>
+    </section>
+
+    <section class="about" id="about">
+      <h2>Обо мне</h2>
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>👋 Кто я</h3>
+          <p>
+            Я&nbsp;Никита&nbsp;— разработчик. Люблю, когда код аккуратный,
+            а&nbsp;инструмент понятный. Всё, что делаю, выкладываю
+            в&nbsp;открытый доступ: без&nbsp;лишней магии, с&nbsp;исходниками.
+          </p>
+        </article>
+        <article class="about-card">
+          <h3>🛠️ Чем занимаюсь</h3>
+          <p>
+            Пишу на&nbsp;JavaScript, Python и&nbsp;Shell. Разрабатываю браузерные
+            расширения, системные утилиты и&nbsp;плазмоиды KDE. Собираю
+            EFI-конфигурации для macOS на&nbsp;ThinkPad и&nbsp;прошивки Padavan.
+          </p>
+        </article>
+        <article class="about-card">
+          <h3>📍 Где меня найти</h3>
+          <p>
+            <a href="https://github.com/withersky" target="_blank" rel="noopener">GitHub</a>
+            — все проекты и&nbsp;исходники.<br>
+            <a href="https://t.me/withersky" target="_blank" rel="noopener">Telegram</a>
+            — связь со&nbsp;мной.<br>
+            Если что-то пригодилось&nbsp;— ставьте ⭐, лучшая мотивация!
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>withersky&nbsp;·&nbsp;©&nbsp;<span id="year"></span></span>
+    <a href="https://github.com/withersky" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

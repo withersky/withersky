@@ -1,0 +1,613 @@
+/* ============================================================
+   withersky.github.io — портфолио в стиле tabula-plugin
+   Палитра Tabula: тёмный фон #1a1a24, индиго, полупрозрачные панели
+   ============================================================ */
+
+:root {
+  --bg: #1a1a24;
+  --bg-panel: #23232e;
+  --bg-card: #23232e;
+  --bg-card-hover: #2a2a37;
+  --bg-ghcard: #14141c;
+  --text: #e8e8f0;
+  --text-dim: #9a9ab0;
+  --text-faint: #6f6f85;
+  --indigo: rgba(120, 140, 255, 0.95);
+  --indigo-soft: rgba(120, 140, 255, 0.18);
+  --indigo-border: rgba(120, 140, 255, 0.32);
+  --indigo-text: #b4beff;
+  --danger: #ff5c6c;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 14px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", Consolas, "Roboto Mono", monospace;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --topbar-h: 64px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--indigo-text);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---------- Фоновое свечение ---------- */
+
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 340px at 78% -4%, rgba(120, 140, 255, 0.13), transparent 65%),
+    radial-gradient(520px 320px at -6% 28%, rgba(120, 140, 255, 0.07), transparent 60%);
+}
+
+/* ---------- Верхняя панель ---------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-h);
+  padding: 0 32px;
+  background: rgba(26, 26, 36, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.brand img {
+  border-radius: var(--radius-sm);
+}
+
+.brand .brand-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav a {
+  color: var(--text-dim);
+  font-size: 14px;
+  transition: color 0.18s ease;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav .nav-external {
+  color: var(--indigo-text);
+}
+
+/* ---------- Кнопки ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--indigo);
+  color: #14141c;
+  box-shadow: 0 8px 24px rgba(120, 140, 255, 0.28);
+}
+
+.btn-primary:hover {
+  background: rgba(134, 152, 255, 0.98);
+  box-shadow: 0 10px 30px rgba(120, 140, 255, 0.38);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.btn-ghost:hover {
+  border-color: var(--indigo-border);
+  background: var(--indigo-soft);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: 88px 32px 64px;
+}
+
+.hero-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: 56px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--indigo-soft);
+  border: 1px solid var(--indigo-border);
+  color: var(--indigo-text);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  max-width: 34em;
+  color: var(--text-dim);
+  font-size: 17px;
+  margin-bottom: 32px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 44px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.stat-label {
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+/* ---------- Карточка графика вклада ---------- */
+
+.github-card {
+  position: relative;
+  display: block;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-ghcard);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  animation: githubCardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.github-card:hover {
+  border-color: rgba(120, 140, 255, 0.55);
+  transform: translateY(-4px);
+}
+
+.github-card img {
+  border-radius: var(--radius-sm);
+}
+
+.github-card-caption {
+  display: block;
+  margin-top: 12px;
+  color: var(--text-faint);
+  font-size: 13px;
+  text-align: center;
+}
+
+@keyframes githubCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---------- Секция проектов ---------- */
+
+.projects {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 32px 88px;
+}
+
+.section-head {
+  margin-bottom: 28px;
+}
+
+.section-head h2 {
+  font-size: 30px;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.section-sub {
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+/* Лист-бар в стиле Tabula */
+
+.sheet-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  margin-bottom: 28px;
+  padding: 10px 12px 0;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  overflow-x: auto;
+}
+
+.sheet-tabs {
+  display: flex;
+  gap: 6px;
+  padding-bottom: 0;
+}
+
+.sheet-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px 10px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.sheet-tab:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.sheet-tab[aria-selected="true"] {
+  background: var(--bg-panel);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: 0 -2px 0 var(--indigo) inset;
+}
+
+.lang-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Сетка карточек */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--indigo-border);
+  background: var(--bg-card-hover);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.project-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.project-name a {
+  color: inherit;
+}
+
+.project-name a:hover {
+  color: var(--indigo-text);
+}
+
+.lang-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.project-desc {
+  flex: 1;
+  color: var(--text-dim);
+  font-size: 14.5px;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-faint);
+  font-size: 12.5px;
+}
+
+.project-meta .stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.project-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.project-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+.action-repo {
+  background: var(--indigo-soft);
+  border: 1px solid var(--indigo-border);
+  color: var(--indigo-text);
+}
+
+.action-repo:hover {
+  background: rgba(120, 140, 255, 0.28);
+}
+
+.action-site {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+
+.action-site:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* ---------- Секция «Обо мне» ---------- */
+
+.about {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px 96px;
+}
+
+.about h2 {
+  font-size: 30px;
+  letter-spacing: -0.01em;
+  margin-bottom: 28px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.about-card {
+  padding: 24px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.about-card h3 {
+  font-size: 17px;
+  margin-bottom: 10px;
+  color: var(--indigo-text);
+}
+
+.about-card p {
+  color: var(--text-dim);
+  font-size: 14.5px;
+}
+
+/* ---------- Футер ---------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-faint);
+  font-size: 13.5px;
+}
+
+/* ---------- Адаптивность ---------- */
+
+@media (max-width: 960px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .github-card {
+    max-width: 620px;
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    padding: 0 18px;
+  }
+
+  .nav {
+    gap: 14px;
+  }
+
+  .hero {
+    padding: 56px 18px 44px;
+  }
+
+  .hero-stats {
+    gap: 24px;
+  }
+
+  .projects,
+  .about {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* ---------- Доступность ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
