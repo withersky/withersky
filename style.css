@@ -57,6 +57,22 @@ img {
   display: block;
 }
 
+/* ---------- Фоновое изображение (Bing) ---------- */
+
+.bg-image {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-color: var(--bg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* Сильное размытие + затемнение для комфортного чтения */
+  filter: blur(18px) brightness(0.45) saturate(1.05);
+  transform: scale(1.08); /* перекрываем края после размытия */
+}
+
 /* ---------- Фоновое свечение ---------- */
 
 .bg-glow {

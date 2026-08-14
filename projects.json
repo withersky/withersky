@@ -9,7 +9,7 @@
     {
       "name": "tabula-plugin",
       "description": "Новая вкладка как электронная таблица: листы, темы, часы, погода, фон",
-      "language": "JavaScript, "RobotFramework",
+      "language": "JavaScript",
       "stars": 1,
       "homepage": "https://withersky.github.io/tabula-plugin/",
       "url": "https://github.com/withersky/tabula-plugin",

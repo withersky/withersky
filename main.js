@@ -325,6 +325,31 @@ function setupGHChart() {
   });
 }
 
+/* ---------- Фоновое изображение Bing ---------- */
+
+const BING_FALLBACK =
+  'https://bing.biturl.top/?resolution=1920&format=image&index=0&mkt=ru-RU';
+
+async function setupBackground() {
+  const el = document.getElementById('bgImage');
+  if (!el) return;
+
+  const setImage = (url) => {
+    el.style.backgroundImage = `url("${url}")`;
+  };
+
+  try {
+    const res = await fetch('https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=ru-RU');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const url = data && data.url;
+    if (url) setImage(url);
+  } catch (err) {
+    console.warn('Не удалось загрузить Bing-фон, использую резервный URL:', err);
+    setImage(BING_FALLBACK);
+  }
+}
+
 /* ---------- Инициализация ---------- */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -334,6 +359,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderSheets(data);
   renderProjects(data, currentLanguage);
   setupGHChart();
+  setupBackground();
 
   const brandImg = document.querySelector('.brand img');
   if (brandImg && data.profile && data.profile.avatar) {
