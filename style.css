@@ -1,29 +1,34 @@
 /* ============================================================
-   withersky.github.io — портфолио в стиле tabula-plugin
-   Палитра Tabula: тёмный фон #1a1a24, индиго, полупрозрачные панели
+   withersky.github.io — портфолио
+   Единая стилистика с проектом Tabula (папка ref/):
+   та же палитра (#1a1a24, индиго rgba(120,140,255,.95),
+   карточки #23232e, радиусы 8–14px), те же фоновые слои,
+   topbar, nav и карточки, что и на лендинге расширения.
    ============================================================ */
 
 :root {
   --bg: #1a1a24;
-  --bg-panel: #23232e;
-  --bg-card: #23232e;
-  --bg-card-hover: #2a2a37;
+  --bg-grad-end: #15151e;
+  --bg-elev: #23232e;
+  --bg-elev-2: #2a2a36;
   --bg-ghcard: #14141c;
+  --border: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.18);
   --text: #e8e8f0;
-  --text-dim: #9a9ab0;
-  --text-faint: #6f6f85;
-  --indigo: rgba(120, 140, 255, 0.95);
-  --indigo-soft: rgba(120, 140, 255, 0.18);
-  --indigo-border: rgba(120, 140, 255, 0.32);
-  --indigo-text: #b4beff;
-  --danger: #ff5c6c;
+  --muted: rgba(232, 232, 240, 0.6);
+  --text-faint: rgba(232, 232, 240, 0.4);
+  --primary: rgba(120, 140, 255, 0.95);
+  --primary-solid: rgba(120, 140, 255, 1);
+  --primary-fg: #0f0f1a;
+  --primary-soft: rgba(180, 190, 255, 0.95);
+  --primary-soft-bg: rgba(120, 140, 255, 0.18);
+  --primary-border: rgba(120, 140, 255, 0.32);
   --radius: 12px;
   --radius-sm: 8px;
   --radius-lg: 14px;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, sans-serif;
-  --mono: "SF Mono", "JetBrains Mono", Consolas, "Roboto Mono", monospace;
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-  --topbar-h: 64px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  --topbar-h: 56px;
 }
 
 * {
@@ -38,17 +43,28 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
   font-family: var(--font);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 14px;
+  color: var(--text);
+  background: linear-gradient(180deg, #1a1a24 0%, #15151e 100%);
+  background-attachment: fixed;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
+/* Верхнее индиго-свечение, как на лендинге Tabula */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(900px 420px at 50% -120px, rgba(120, 140, 255, 0.13), transparent 65%);
+}
+
 a {
-  color: var(--indigo-text);
+  color: var(--primary-soft);
   text-decoration: none;
 }
 
@@ -57,47 +73,63 @@ img {
   display: block;
 }
 
-/* ---------- Фоновое изображение (Bing) ---------- */
+/* ---------- Фон: заблюренная картинка дня Bing + затемняющий слой ---------- */
 
-.bg-image {
+.site-bg {
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: 0;
   pointer-events: none;
   background-color: var(--bg);
-  background-position: center;
+  background-image: linear-gradient(180deg, #1a1a24 0%, #15151e 100%);
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  /* Сильное размытие + затемнение для комфортного чтения */
-  filter: blur(18px) brightness(0.45) saturate(1.05);
-  transform: scale(1.08); /* перекрываем края после размытия */
+  opacity: 0;
+  transition: opacity 800ms ease;
+  filter: blur(22px) saturate(1.05);
+  transform: scale(1.08);
 }
 
-/* ---------- Фоновое свечение ---------- */
+.site-bg.loaded {
+  opacity: 1;
+}
 
-.bg-glow {
+.site-bg-overlay {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(620px 340px at 78% -4%, rgba(120, 140, 255, 0.13), transparent 65%),
-    radial-gradient(520px 320px at -6% 28%, rgba(120, 140, 255, 0.07), transparent 60%);
+    linear-gradient(180deg, rgba(20, 20, 30, 0.72) 0%, rgba(15, 15, 24, 0.86) 100%),
+    radial-gradient(900px 420px at 50% -120px, rgba(120, 140, 255, 0.10), transparent 65%);
 }
 
-/* ---------- Верхняя панель ---------- */
+/* Контент поверх фоновых слоёв */
+main,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  width: min(1100px, 100% - 40px);
+  margin-inline: auto;
+}
+
+/* ---------- Верхняя панель (как на лендинге Tabula) ---------- */
 
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: var(--topbar-h);
-  padding: 0 32px;
-  background: rgba(26, 26, 36, 0.72);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0 22px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -108,92 +140,92 @@ img {
   gap: 10px;
   color: var(--text);
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
 }
 
-.brand img {
+.brand-avatar {
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-sm);
-}
-
-.brand .brand-avatar {
-  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--border-strong);
   object-fit: cover;
 }
 
 .nav {
   display: flex;
-  align-items: center;
-  gap: 24px;
+  gap: 6px;
 }
 
 .nav a {
-  color: var(--text-dim);
-  font-size: 14px;
-  transition: color 0.18s ease;
+  color: var(--muted);
+  font-size: 13.5px;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  transition: color 160ms ease, background 160ms ease;
 }
 
 .nav a:hover {
   color: var(--text);
+  background: var(--primary-soft-bg);
 }
 
 .nav .nav-external {
-  color: var(--indigo-text);
+  color: var(--primary-soft);
 }
 
-/* ---------- Кнопки ---------- */
+/* ---------- Кнопки (как на лендинге Tabula) ---------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 22px;
-  border-radius: 10px;
+  padding: 11px 20px;
+  border-radius: var(--radius-sm);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   border: 1px solid transparent;
-  transition: transform 0.15s ease, background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
 
 .btn:active {
-  transform: translateY(1px);
+  transform: translateY(0);
 }
 
 .btn-primary {
-  background: var(--indigo);
-  color: #14141c;
-  box-shadow: 0 8px 24px rgba(120, 140, 255, 0.28);
+  background: var(--primary);
+  color: var(--primary-fg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 .btn-primary:hover {
-  background: rgba(134, 152, 255, 0.98);
-  box-shadow: 0 10px 30px rgba(120, 140, 255, 0.38);
+  background: var(--primary-solid);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
 }
 
 .btn-ghost {
   background: transparent;
   color: var(--text);
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: var(--border-strong);
 }
 
 .btn-ghost:hover {
-  border-color: var(--indigo-border);
-  background: var(--indigo-soft);
+  background: var(--primary-soft-bg);
+  border-color: var(--primary-border);
 }
 
 /* ---------- Hero ---------- */
 
 .hero {
-  padding: 88px 32px 64px;
+  padding: 64px 0 56px;
 }
 
 .hero-inner {
-  max-width: 1120px;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1.05fr 1fr;
   align-items: center;
-  gap: 56px;
+  gap: 48px;
 }
 
 .eyebrow {
@@ -201,33 +233,34 @@ img {
   margin-bottom: 18px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: var(--indigo-soft);
-  border: 1px solid var(--indigo-border);
-  color: var(--indigo-text);
+  background: var(--primary-soft-bg);
+  border: 1px solid var(--primary-border);
+  color: var(--primary-soft);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
 }
 
 .hero h1 {
-  font-size: clamp(34px, 5vw, 54px);
+  font-size: clamp(28px, 4.4vw, 44px);
   line-height: 1.12;
+  font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .hero-subtitle {
-  max-width: 34em;
-  color: var(--text-dim);
-  font-size: 17px;
-  margin-bottom: 32px;
+  max-width: 480px;
+  color: var(--muted);
+  font-size: 15.5px;
+  margin-bottom: 26px;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 44px;
+  gap: 12px;
+  margin-bottom: 40px;
 }
 
 .hero-stats {
@@ -248,7 +281,7 @@ img {
   font-size: 13px;
 }
 
-/* ---------- Карточка графика вклада ---------- */
+/* ---------- Карточка графика вклада (в стиле .mock лендинга) ---------- */
 
 .github-card {
   position: relative;
@@ -256,15 +289,15 @@ img {
   padding: 20px;
   border-radius: var(--radius-lg);
   background: var(--bg-ghcard);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-strong);
   box-shadow: var(--shadow);
-  transition: border-color 0.2s ease, transform 0.2s ease;
-  animation: githubCardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: border-color 200ms ease, transform 200ms ease;
+  animation: githubCardIn 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 .github-card:hover {
   border-color: rgba(120, 140, 255, 0.55);
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 .github-card img {
@@ -282,7 +315,7 @@ img {
 @keyframes githubCardIn {
   from {
     opacity: 0;
-    transform: translateY(18px) scale(0.98);
+    transform: translateY(10px) scale(0.99);
   }
   to {
     opacity: 1;
@@ -293,39 +326,67 @@ img {
 /* ---------- Секция проектов ---------- */
 
 .projects {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 48px 32px 88px;
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
 }
 
 .section-head {
-  margin-bottom: 28px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .section-head h2 {
-  font-size: 30px;
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
   letter-spacing: -0.01em;
   margin-bottom: 6px;
 }
 
 .section-sub {
-  color: var(--text-dim);
+  color: var(--muted);
   font-size: 15px;
 }
 
 /* Лист-бар в стиле Tabula */
-
 .sheet-bar {
   display: flex;
-  align-items: flex-end;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 28px;
-  padding: 10px 12px 0;
-  background: rgba(0, 0, 0, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: none;
-  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   overflow-x: auto;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-border) transparent;
+}
+
+.sheet-bar.is-scrolling {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.sheet-bar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.sheet-bar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sheet-bar::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.sheet-bar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-border);
+  background-clip: padding-box;
 }
 
 .sheet-tabs {
@@ -338,29 +399,30 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 16px 10px;
-  border: 1px solid transparent;
-  border-bottom: none;
-  border-radius: 8px 8px 0 0;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
-  color: var(--text-dim);
+  color: var(--muted);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.16s ease, color 0.16s ease;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 
 .sheet-tab:hover {
   background: rgba(255, 255, 255, 0.08);
   color: var(--text);
+  border-color: var(--border-strong);
 }
 
 .sheet-tab[aria-selected="true"] {
-  background: var(--bg-panel);
-  color: var(--text);
-  font-weight: 600;
-  box-shadow: 0 -2px 0 var(--indigo) inset;
+  background: var(--primary-soft-bg);
+  color: var(--primary-soft);
+  border-color: var(--primary-border);
+  box-shadow: 0 0 0 1px var(--primary-border);
 }
 
 .lang-dot {
@@ -370,12 +432,35 @@ img {
   flex-shrink: 0;
 }
 
-/* Сетка карточек */
+.sheet-label {
+  line-height: 1;
+}
 
+.sheet-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-faint);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.sheet-tab[aria-selected="true"] .sheet-count {
+  background: var(--primary);
+  color: var(--primary-fg);
+}
+
+/* Сетка карточек */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 14px;
 }
 
 .project-card {
@@ -384,24 +469,24 @@ img {
   gap: 12px;
   padding: 22px;
   border-radius: var(--radius);
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-  animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+  animation: cardIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
   animation-delay: calc(var(--i, 0) * 60ms);
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--indigo-border);
-  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  background: var(--bg-elev-2);
 }
 
 @keyframes cardIn {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -429,7 +514,7 @@ img {
 }
 
 .project-name a:hover {
-  color: var(--indigo-text);
+  color: var(--primary-soft);
 }
 
 .lang-badge {
@@ -442,13 +527,13 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-dim);
+  color: var(--muted);
   white-space: nowrap;
 }
 
 .project-desc {
   flex: 1;
-  color: var(--text-dim);
+  color: var(--muted);
   font-size: 14.5px;
 }
 
@@ -480,13 +565,13 @@ img {
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  transition: background 0.16s ease, border-color 0.16s ease;
+  transition: background 160ms ease, border-color 160ms ease;
 }
 
 .action-repo {
-  background: var(--indigo-soft);
-  border: 1px solid var(--indigo-border);
-  color: var(--indigo-text);
+  background: var(--primary-soft-bg);
+  border: 1px solid var(--primary-border);
+  color: var(--primary-soft);
 }
 
 .action-repo:hover {
@@ -500,58 +585,77 @@ img {
 }
 
 .action-site:hover {
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: var(--border-strong);
 }
 
 /* ---------- Секция «Обо мне» ---------- */
 
 .about {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 32px 96px;
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
 }
 
 .about h2 {
-  font-size: 30px;
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
   letter-spacing: -0.01em;
-  margin-bottom: 28px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 14px;
 }
 
 .about-card {
-  padding: 24px;
+  padding: 22px;
   border-radius: var(--radius);
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.about-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
 }
 
 .about-card h3 {
   font-size: 17px;
   margin-bottom: 10px;
-  color: var(--indigo-text);
+  color: var(--primary-soft);
 }
 
 .about-card p {
-  color: var(--text-dim);
+  color: var(--muted);
   font-size: 14.5px;
 }
 
-/* ---------- Футер ---------- */
+/* ---------- Футер (как на лендинге Tabula) ---------- */
 
 .footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.footer-inner {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 16px;
-  padding: 28px 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--text-faint);
-  font-size: 13.5px;
+  gap: 8px;
+}
+
+.footer a {
+  color: var(--text);
+}
+
+.footer a:hover {
+  color: var(--primary-soft);
+  text-decoration: underline;
 }
 
 /* ---------- Адаптивность ---------- */
@@ -559,7 +663,7 @@ img {
 @media (max-width: 960px) {
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
 
   .github-card {
@@ -577,25 +681,24 @@ img {
 
 @media (max-width: 560px) {
   .topbar {
-    padding: 0 18px;
+    padding: 0 14px;
   }
 
   .nav {
-    gap: 14px;
+    gap: 2px;
+  }
+
+  .nav a {
+    padding: 6px 8px;
+    font-size: 12.5px;
   }
 
   .hero {
-    padding: 56px 18px 44px;
+    padding: 48px 0 40px;
   }
 
   .hero-stats {
     gap: 24px;
-  }
-
-  .projects,
-  .about {
-    padding-left: 18px;
-    padding-right: 18px;
   }
 
   .project-grid {

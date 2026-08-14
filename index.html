@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>withersky — портфолио</title>
-  <meta name="description" content="Портфолио разработчика: проекты, разложенные по ячейкам, в стиле расширения Tabula.">
+  <meta name="description" content="Портфолио разработчика.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="bg-image" id="bgImage" aria-hidden="true"></div>
-  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="site-bg" id="siteBg" aria-hidden="true"></div>
+  <div class="site-bg-overlay" aria-hidden="true"></div>
 
   <header class="topbar">
     <a class="brand" href="#top" aria-label="withersky — наверх">
@@ -26,9 +26,9 @@
 
   <main id="top">
     <section class="hero">
-      <div class="hero-inner">
+      <div class="container hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow" id="eyebrow">Nikita V.&nbsp;·&nbsp;Разработчик</p>
+          <p class="eyebrow">Nikita V.&nbsp;·&nbsp;Портфолио разработчика</p>
           <h1>Мои <br>проекты!</h1>
           <p class="hero-subtitle">
             Инструменты для Linux, браузерные расширения и&nbsp;системные утилиты —
@@ -66,21 +66,23 @@
     </section>
 
     <section class="projects" id="projects">
-      <div class="section-head">
+      <div class="container section-head">
         <h2>Проекты</h2>
-        <p class="section-sub">Фильтр-«листы», как во вкладке Tabula</p>
       </div>
 
-      <div class="sheet-bar" role="tablist" aria-label="Фильтр проектов по языку">
-        <div class="sheet-tabs" id="sheetTabs"></div>
-      </div>
+      <div class="container">
+        <div class="sheet-bar" role="tablist" aria-label="Фильтр проектов по языку">
+          <div class="sheet-tabs" id="sheetTabs"></div>
+        </div>
 
-      <div class="project-grid" id="projectGrid"></div>
+        <div class="project-grid" id="projectGrid"></div>
+      </div>
     </section>
 
     <section class="about" id="about">
-      <h2>Обо мне</h2>
-      <div class="about-grid">
+      <div class="container">
+        <h2>Обо мне</h2>
+        <div class="about-grid">
         <article class="about-card">
           <h3>👋 Кто я</h3>
           <p>
@@ -107,13 +109,16 @@
             Если что-то пригодилось&nbsp;— ставьте ⭐, лучшая мотивация!
           </p>
         </article>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <span>withersky&nbsp;·&nbsp;©&nbsp;<span id="year"></span></span>
-    <a href="https://github.com/withersky" target="_blank" rel="noopener">GitHub</a>
+    <div class="container footer-inner">
+      <span>Портфолио&nbsp;·&nbsp;<a href="https://github.com/withersky" target="_blank" rel="noopener">withersky</a>&nbsp;·&nbsp;<span id="year"></span></span>
+      <a href="https://github.com/withersky/withersky.github.io" target="_blank" rel="noopener" data-i18n="footerSource">Исходный код на GitHub</a>
+    </div>
   </footer>
 
   <script src="main.js"></script>

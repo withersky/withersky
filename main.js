@@ -17,17 +17,6 @@ const LANGUAGE_COLORS = {
   RobotFramework: '#00c0b0',
 };
 
-const LANGUAGE_ICONS = {
-  JavaScript: '⚡',
-  Python: '🐍',
-  Rust: '🦀',
-  Shell: '🐚',
-  QML: '🧩',
-  ASL: '💾',
-  YAML: '⚙️',
-  RobotFramework: '🤖',
-};
-
 const MONTHS_RU = [
   'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
   'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
@@ -168,10 +157,16 @@ function renderStats(data) {
 
 /* ---------- Листы-фильтры ---------- */
 
+function countByLanguage(projects, language) {
+  if (language === 'Все') return projects.length;
+  return projects.filter((p) => p.language === language).length;
+}
+
 function renderSheets(data) {
   const tabsBox = document.getElementById('sheetTabs');
   tabsBox.textContent = '';
-  const languages = ['Все', ...uniqueLanguages(data.projects || [])];
+  const projects = data.projects || [];
+  const languages = ['Все', ...uniqueLanguages(projects)];
 
   languages.forEach((language) => {
     const tab = document.createElement('button');
@@ -181,14 +176,22 @@ function renderSheets(data) {
     tab.setAttribute('aria-selected', String(language === currentLanguage));
     tab.dataset.language = language;
 
+    /* Цветной индикатор языка */
     const dot = document.createElement('span');
     dot.className = 'lang-dot';
     dot.style.background = LANGUAGE_COLORS[language] || 'rgba(255,255,255,0.25)';
     tab.appendChild(dot);
 
     const label = document.createElement('span');
+    label.className = 'sheet-label';
     label.textContent = language;
     tab.appendChild(label);
+
+    /* Счётчик проектов в этом фильтре */
+    const count = document.createElement('span');
+    count.className = 'sheet-count';
+    count.textContent = String(countByLanguage(projects, language));
+    tab.appendChild(count);
 
     tab.addEventListener('click', () => {
       currentLanguage = language;
@@ -198,6 +201,49 @@ function renderSheets(data) {
 
     tabsBox.appendChild(tab);
   });
+}
+
+/* ---------- Свайп мышкой по блоку языков (drag-to-scroll) ---------- */
+
+function enableSheetBarSwipe(bar) {
+  let down = false;
+  let startX = 0;
+  let startScroll = 0;
+  let moved = false;
+
+  bar.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    down = true;
+    moved = false;
+    startX = e.clientX;
+    startScroll = bar.scrollLeft;
+  });
+
+  // Слушаем на window, чтобы свайп продолжался за пределами блока.
+  // Без setPointerCapture клики по кнопкам доходят до своих обработчиков.
+  window.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (!moved && Math.abs(dx) < 4) return;
+    moved = true;
+    bar.classList.add('is-scrolling');
+    bar.scrollLeft = startScroll - dx;
+  });
+
+  window.addEventListener('pointerup', () => {
+    if (!down) return;
+    down = false;
+    bar.classList.remove('is-scrolling');
+  });
+
+  // Гасим клик, если был свайп, до того как он дойдёт до кнопки (capture-фаза)
+  bar.addEventListener('click', (e) => {
+    if (moved) {
+      e.preventDefault();
+      e.stopPropagation();
+      moved = false;
+    }
+  }, true);
 }
 
 /* ---------- Карточки проектов ---------- */
@@ -325,17 +371,29 @@ function setupGHChart() {
   });
 }
 
-/* ---------- Фоновое изображение Bing ---------- */
+/* ---------- Фоновое изображение Bing (как на лендинге Tabula) ---------- */
 
 const BING_FALLBACK =
   'https://bing.biturl.top/?resolution=1920&format=image&index=0&mkt=ru-RU';
 
 async function setupBackground() {
-  const el = document.getElementById('bgImage');
+  const el = document.getElementById('siteBg');
   if (!el) return;
 
+  /* Показать слой с исходным градиентом-фоллбэком (без картинки Bing) */
+  const showFallback = () => {
+    if (!el.classList.contains('with-image')) el.classList.add('loaded');
+  };
+
+  /* Применяем картинку только после успешной загрузки через Image() */
   const setImage = (url) => {
-    el.style.backgroundImage = `url("${url}")`;
+    const probe = new Image();
+    probe.onload = () => {
+      el.style.backgroundImage = `url("${url}")`;
+      el.classList.add('with-image', 'loaded');
+    };
+    probe.onerror = () => showFallback();
+    probe.src = url;
   };
 
   try {
@@ -344,6 +402,7 @@ async function setupBackground() {
     const data = await res.json();
     const url = data && data.url;
     if (url) setImage(url);
+    else showFallback();
   } catch (err) {
     console.warn('Не удалось загрузить Bing-фон, использую резервный URL:', err);
     setImage(BING_FALLBACK);
@@ -360,6 +419,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderProjects(data, currentLanguage);
   setupGHChart();
   setupBackground();
+
+  const sheetBar = document.querySelector('.sheet-bar');
+  if (sheetBar) enableSheetBarSwipe(sheetBar);
 
   const brandImg = document.querySelector('.brand img');
   if (brandImg && data.profile && data.profile.avatar) {
