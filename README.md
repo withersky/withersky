@@ -36,7 +36,7 @@
 
 ## 📫 Где меня найти
 
-- **Портфолио-сайт:** [withersky.github.io](https://withersky.github.io/)
+- **Портфолио-сайт:** [withersky.github.io](https://me.withersky.workers.dev/)
 - **GitHub:** [github.com/withersky](https://github.com/withersky)
 - **Telegram:** [t.me/withersky](https://t.me/withersky)
 
