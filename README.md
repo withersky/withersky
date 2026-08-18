@@ -11,7 +11,7 @@
 новая вкладка браузера в виде электронной таблицы. В её же стиле оформлен
 и этот профиль.
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-withersky.github.io-788cff?style=flat-square)](https://me.withersky.workers.dev/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-me.withersky.workers.dev-788cff?style=flat-square)](https://me.withersky.workers.dev/)
 [![GitHub](https://img.shields.io/badge/GitHub-withersky-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/withersky)
 
 ---
@@ -22,7 +22,7 @@
 
 | Проект | Описание | Язык | Ссылки |
 | :--- | :--- | :--- | :--- |
-| [**tabula-plugin**](https://github.com/withersky/tabula-plugin) | Новая вкладка как электронная таблица: листы, темы, часы, погода, фон | JavaScript | [🌐 сайт](https://withersky.github.io/tabula-plugin/) |
+| [**tabula-plugin**](https://github.com/withersky/tabula-plugin) | Новая вкладка как электронная таблица: листы, темы, часы, погода, фон | JavaScript | [🌐 сайт](https://tabula.withersky.github.io/) |
 | [**ucleaner**](https://github.com/withersky/ucleaner) | Очиститель кэша и временных файлов для deb-дистрибутивов Linux | Python | |
 | [**scrcpy-gui**](https://github.com/withersky/scrcpy-gui) | GUI для scrcpy — управление Android по ADB через WiFi | Python | |
 | [**foreigncurrencies**](https://github.com/withersky/foreigncurrencies) | Плазмоид KDE: курсы иностранных валют в реальном времени | QML | |
