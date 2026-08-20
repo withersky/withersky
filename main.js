@@ -1,5 +1,5 @@
 /* ============================================================
-   withersky.github.io — логика портфолио
+   withersky — логика портфолио
    Рендер карточек, фильтры-«листы», статистика, график вклада
    ============================================================ */
 
@@ -36,7 +36,7 @@ const FALLBACK = {
       description: 'Новая вкладка как электронная таблица: листы, темы, часы, погода, фон',
       language: 'JavaScript',
       stars: 1,
-      homepage: 'https://withersky.github.io/tabula-plugin/',
+      homepage: 'https://tabula.withersky.workers.dev',
       url: 'https://github.com/withersky/tabula-plugin',
       updated: '2026-08-04',
     },

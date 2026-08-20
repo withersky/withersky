@@ -22,7 +22,7 @@
 
 | Проект | Описание | Язык | Ссылки |
 | :--- | :--- | :--- | :--- |
-| [**tabula-plugin**](https://github.com/withersky/tabula-plugin) | Новая вкладка как электронная таблица: листы, темы, часы, погода, фон | JavaScript | [🌐 сайт](https://tabula.withersky.github.io/) |
+| [**tabula-plugin**](https://github.com/withersky/tabula-plugin) | Новая вкладка как электронная таблица: листы, темы, часы, погода, фон | JavaScript | [🌐 сайт](https://tabula.withersky.workers.dev/) |
 | [**ucleaner**](https://github.com/withersky/ucleaner) | Очиститель кэша и временных файлов для deb-дистрибутивов Linux | Python | |
 | [**scrcpy-gui**](https://github.com/withersky/scrcpy-gui) | GUI для scrcpy — управление Android по ADB через WiFi | Python | |
 | [**foreigncurrencies**](https://github.com/withersky/foreigncurrencies) | Плазмоид KDE: курсы иностранных валют в реальном времени | QML | |
@@ -36,7 +36,7 @@
 
 ## 📫 Где меня найти
 
-- **Портфолио-сайт:** [withersky.github.io](https://me.withersky.workers.dev/)
+- **Портфолио-сайт:** [me.withersky.workers.dev](https://me.withersky.workers.dev/)
 - **GitHub:** [github.com/withersky](https://github.com/withersky)
 - **Telegram:** [t.me/withersky](https://t.me/withersky)
 
