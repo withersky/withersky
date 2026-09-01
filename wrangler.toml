@@ -1,0 +1,11 @@
+name = "withersky"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Статические файлы сайта (корень репозитория)
+[assets]
+directory = "./"
+
+# Ночная пересборка: каждый день в 00:00 UTC (03:00 МСК)
+[triggers]
+crons = ["0 0 * * *"]

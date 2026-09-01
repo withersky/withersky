@@ -2,3 +2,4 @@
 projects.json
 
 node_modules/
+.wrangler/cache/
