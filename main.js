@@ -22,112 +22,15 @@ const MONTHS_RU = [
   'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
 ];
 
-/* Резервные данные — используются, если projects.json недоступен */
-const FALLBACK = {
-  profile: {
-    login: 'withersky',
-    name: 'Nikita V.',
-    avatar: 'https://avatars.githubusercontent.com/u/55928929?v=4',
-    github: 'https://github.com/withersky',
-  },
-  projects: [
-    {
-      name: 'tabula-plugin',
-      description: 'Новая вкладка как электронная таблица: листы, темы, часы, погода, фон',
-      language: 'JavaScript',
-      stars: 1,
-      homepage: 'https://tabula.withersky.workers.dev',
-      url: 'https://github.com/withersky/tabula-plugin',
-      updated: '2026-08-04',
-    },
-    {
-      name: 'ucleaner',
-      description: 'Очиститель кэша и временных файлов для deb-дистрибутивов Linux',
-      language: 'Python',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/ucleaner',
-      updated: '2026-04-03',
-    },
-    {
-      name: 'scrcpy-gui',
-      description: 'GUI для scrcpy — управление Android по ADB через WiFi',
-      language: 'Python',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/scrcpy-gui',
-      updated: '2026-04-03',
-    },
-    {
-      name: 'foreigncurrencies',
-      description: 'Плазмоид KDE: курсы иностранных валют в реальном времени',
-      language: 'QML',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/foreigncurrencies',
-      updated: '2026-03-21',
-    },
-    {
-      name: 'thinkpad-t480-efi-sonoma',
-      description: 'Готовая EFI-конфигурация для macOS Sonoma на ThinkPad T480',
-      language: 'ASL',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/thinkpad-t480-efi-sonoma',
-      updated: '2024-09-10',
-    },
-    {
-      name: 'tftpd-manager',
-      description: 'Интерактивное консольное меню для управления tftpd-сервером',
-      language: 'Shell',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/tftpd-manager',
-      updated: '2026-03-05',
-    },
-    {
-      name: 'padavan-builder-workflow',
-      description: 'Автоматическая сборка прошивки Padavan в GitHub Actions — для TP-Link TL-WR841N v13',
-      language: 'YAML',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/padavan-builder-workflow',
-      updated: '2026-02-15',
-    },
-    {
-      name: 'Withersky-Tech-Fetch',
-      description: 'Форк screenfetch/neofetch — информация о системе в терминале',
-      language: 'Shell',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/Withersky-Tech-Fetch',
-      updated: '2024-09-12',
-    },
-    {
-      name: 'bc-testing',
-      description: 'BC-тесты для Linux, написанные на Robot Framework',
-      language: 'RobotFramework',
-      stars: 0,
-      homepage: null,
-      url: 'https://github.com/withersky/bc-testing',
-      updated: '2022-07-28',
-    },
-  ],
-};
-
 let currentLanguage = 'Все';
 
 /* ---------- Загрузка данных ---------- */
 
+/* projects.json генерируется скриптом сборки (build.js) из repos.json */
 async function loadData() {
-  try {
-    const res = await fetch('projects.json', { cache: 'no-cache' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    console.warn('projects.json недоступен, использую резервные данные:', err);
-    return FALLBACK;
-  }
+  const res = await fetch('projects.json', { cache: 'no-cache' });
+  if (!res.ok) throw new Error(`projects.json недоступен: HTTP ${res.status}`);
+  return await res.json();
 }
 
 /* ---------- Хелперы ---------- */
@@ -141,6 +44,7 @@ function uniqueLanguages(projects) {
 }
 
 function formatUpdated(dateStr) {
+  if (!dateStr) return 'неизвестно';
   const d = new Date(dateStr);
   if (Number.isNaN(d.getTime())) return dateStr;
   return `${d.getDate()} ${MONTHS_RU[d.getMonth()]} ${d.getFullYear()}`;
@@ -275,7 +179,8 @@ function buildCard(project, index) {
   badge.appendChild(document.createTextNode(project.language));
 
   head.appendChild(name);
-  head.appendChild(badge);
+  /* Бейдж языка показываем только если язык определён (GitHub может не вернуть его) */
+  if (project.language) head.appendChild(badge);
 
   /* Описание */
   const desc = document.createElement('p');

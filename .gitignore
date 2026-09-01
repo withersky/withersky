@@ -1,0 +1,4 @@
+# Генерируется скриптом build.js из repos.json
+projects.json
+
+node_modules/

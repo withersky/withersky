@@ -1,0 +1,19 @@
+{
+  "profile": {
+    "login": "withersky",
+    "name": "Nikita V.",
+    "avatar": "https://avatars.githubusercontent.com/u/55928929?v=4",
+    "github": "https://github.com/withersky"
+  },
+  "repos": [
+    "withersky/tabula-plugin",
+    "withersky/zed-textile",
+    "withersky/ucleaner",
+    "withersky/scrcpy-gui",
+    "withersky/foreigncurrencies",
+    "withersky/thinkpad-t480-efi-sonoma",
+    "withersky/tftpd-manager",
+    "withersky/Withersky-Tech-Fetch",
+    "withersky/bc-testing"
+  ]
+}
