@@ -8,12 +8,11 @@
   "repos": [
     "withersky/tabula-plugin",
     "withersky/zed-textile",
-    "withersky/ucleaner",
+    "withersky/kgraph",
     "withersky/scrcpy-gui",
     "withersky/foreigncurrencies",
     "withersky/thinkpad-t480-efi-sonoma",
     "withersky/tftpd-manager",
-    "withersky/Withersky-Tech-Fetch",
-    "withersky/bc-testing"
+    "withersky/Withersky-Tech-Fetch"
   ]
 }
